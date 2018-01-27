@@ -7,9 +7,9 @@ import {
     REQUEST_REPOS,
     RECEIVE_REPOS,
     RECEIVE_REPOS_ERROR,
-} from './actions';
+} from './constants/ActionTypes';
 
-function currentUser(state = '', action) {
+export function currentUser(state = '', action) {
     switch (action.type) {
         case SELECT_USER:
             return action.user;
@@ -18,7 +18,7 @@ function currentUser(state = '', action) {
     }
 }
 
-function currentUserData(
+export function currentUserData(
     state = {
         isFetching: false,
         userData: {},
@@ -45,7 +45,7 @@ function currentUserData(
     }
 }
 
-function userRepos(
+export function userRepos(
     state = {
         isFetching: false,
         repos: [],

@@ -1,12 +1,12 @@
-// import fetch from 'cross-fetch';
-
-export const SELECT_USER = 'SELECT_USER';
-export const REQUEST_USERDATA = 'REQUEST_USERDATA';
-export const RECEIVE_USERDATA = 'RECEIVE_USERDATA';
-export const RECEIVE_USERDATA_ERROR = 'RECEIVE_USERDATA_ERROR';
-export const REQUEST_REPOS = 'REQUEST_REPOS';
-export const RECEIVE_REPOS = 'RECEIVE_REPOS';
-export const RECEIVE_REPOS_ERROR = 'RECEIVE_REPOS_ERROR';
+import {
+    SELECT_USER,
+    REQUEST_USERDATA,
+    RECEIVE_USERDATA,
+    RECEIVE_USERDATA_ERROR,
+    REQUEST_REPOS,
+    RECEIVE_REPOS,
+    RECEIVE_REPOS_ERROR,
+} from './constants/ActionTypes';
 
 export function selectUser(user) {
     return {
