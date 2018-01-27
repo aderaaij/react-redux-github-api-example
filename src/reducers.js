@@ -3,8 +3,10 @@ import {
     SELECT_USER,
     REQUEST_USERDATA,
     RECEIVE_USERDATA,
+    RECEIVE_USERDATA_ERROR,
     REQUEST_REPOS,
     RECEIVE_REPOS,
+    RECEIVE_REPOS_ERROR,
 } from './actions';
 
 function currentUser(state = '', action) {
@@ -33,6 +35,11 @@ function currentUserData(
                 isFetching: false,
                 userData: action.userData,
             });
+        case RECEIVE_USERDATA_ERROR:
+            return Object.assign({}, state, {
+                isFetching: false,
+                userData: action.error,
+            });
         default:
             return state;
     }
@@ -54,6 +61,11 @@ function userRepos(
             return Object.assign({}, state, {
                 isFetching: false,
                 repos: action.repos,
+            });
+        case RECEIVE_REPOS_ERROR:
+            return Object.assign({}, state, {
+                isFetching: false,
+                repos: action.error,
             });
         default:
             return state;
