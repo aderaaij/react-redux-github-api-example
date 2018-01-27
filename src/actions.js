@@ -7,15 +7,15 @@ export const RECEIVE_REPOS = 'RECEIVE_REPOS';
 export function selectUser(user) {
     return {
         type: SELECT_USER,
-        user
-    }
+        user,
+    };
 }
 
 function requestUserData(user) {
     return {
         type: REQUEST_USERDATA,
-        user
-    }
+        user,
+    };
 }
 
 function receiveUserData(user, json) {
@@ -23,14 +23,14 @@ function receiveUserData(user, json) {
         type: RECEIVE_USERDATA,
         user,
         userData: json,
-    }
+    };
 }
 
 function requestRepos(user) {
     return {
         type: REQUEST_REPOS,
-        user
-    }
+        user,
+    };
 }
 
 function receiveRepos(user, json) {
@@ -38,35 +38,38 @@ function receiveRepos(user, json) {
         type: RECEIVE_REPOS,
         user,
         repos: json,
-    }
+    };
 }
 
 function fetchUserData(user) {
     return dispatch => {
-        dispatch(requestUserData(user))
+        dispatch(requestUserData(user));
         return fetch(`https://api.github.com/users/${user}`)
             .then(res => res.json())
-            .then(json => dispatch(receiveUserData(user, json)))
-    }
+            .then(json => dispatch(receiveUserData(user, json)));
+    };
 }
 
 function fetchRepos(user) {
     return dispatch => {
-        dispatch(requestRepos(user))
+        dispatch(requestRepos(user));
         return fetch(`https://api.github.com/users/${user}/repos`)
             .then(res => res.json())
-            .then(json => dispatch(receiveRepos(user, json)))
-    }
+            .then(json => dispatch(receiveRepos(user, json)));
+    };
 }
 
 export function fetchUserAndRepos(user) {
     return (dispatch, getState) => {
         return dispatch(fetchUserData(user)).then(() => {
-            const { currentUserData } = getState(); 
-            if (!currentUserData.isFetching && currentUserData.userData.message) {
+            const { currentUserData } = getState();
+            if (
+                !currentUserData.isFetching &&
+                currentUserData.userData.message
+            ) {
                 return false;
             }
             return dispatch(fetchRepos(user));
-        })
-    }
+        });
+    };
 }
