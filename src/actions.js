@@ -1,8 +1,12 @@
+import fetch from 'cross-fetch';
+
 export const SELECT_USER = 'SELECT_USER';
 export const REQUEST_USERDATA = 'REQUEST_USERDATA';
 export const RECEIVE_USERDATA = 'RECEIVE_USERDATA';
+export const RECEIVE_USERDATA_ERROR = 'RECEIVE_USERDATA_ERROR';
 export const REQUEST_REPOS = 'REQUEST_REPOS';
 export const RECEIVE_REPOS = 'RECEIVE_REPOS';
+export const RECEIVE_REPOS_ERROR = 'RECEIVE_REPOS_ERROR';
 
 export function selectUser(user) {
     return {
@@ -11,51 +15,63 @@ export function selectUser(user) {
     };
 }
 
-function requestUserData(user) {
+export function requestUserData() {
     return {
         type: REQUEST_USERDATA,
-        user,
     };
 }
 
-function receiveUserData(user, json) {
+function receiveUserData(json) {
     return {
         type: RECEIVE_USERDATA,
-        user,
         userData: json,
     };
 }
 
-function requestRepos(user) {
+function receiveUserDataErr(error) {
     return {
-        type: REQUEST_REPOS,
-        user,
+        type: RECEIVE_USERDATA_ERROR,
+        error,
     };
 }
 
-function receiveRepos(user, json) {
+function requestRepos() {
+    return {
+        type: REQUEST_REPOS,
+    };
+}
+
+function receiveRepos(json) {
     return {
         type: RECEIVE_REPOS,
-        user,
         repos: json,
     };
 }
 
-function fetchUserData(user) {
+function receiveReposErr(error) {
+    return {
+        type: RECEIVE_REPOS_ERROR,
+        error,
+    };
+}
+
+export function fetchUserData(user) {
     return dispatch => {
-        dispatch(requestUserData(user));
+        dispatch(requestUserData());
         return fetch(`https://api.github.com/users/${user}`)
             .then(res => res.json())
-            .then(json => dispatch(receiveUserData(user, json)));
+            .then(json => dispatch(receiveUserData(json)))
+            .catch(err => dispatch(receiveUserDataErr(err)));
     };
 }
 
 function fetchRepos(user) {
     return dispatch => {
-        dispatch(requestRepos(user));
+        dispatch(requestRepos());
         return fetch(`https://api.github.com/users/${user}/repos`)
             .then(res => res.json())
-            .then(json => dispatch(receiveRepos(user, json)));
+            .then(json => dispatch(receiveRepos(json)))
+            .catch(err => dispatch(receiveReposErr(err)));
     };
 }
 
