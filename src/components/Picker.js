@@ -10,7 +10,9 @@ const Picker = props => {
             <form
                 onSubmit={e => {
                     e.preventDefault();
-                    onSubmit(input.value);
+                    if (input.value !== '') {
+                        onSubmit(input.value);
+                    }
                 }}
             >
                 <input
