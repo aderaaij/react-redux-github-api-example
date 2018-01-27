@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch';
+// import fetch from 'cross-fetch';
 
 export const SELECT_USER = 'SELECT_USER';
 export const REQUEST_USERDATA = 'REQUEST_USERDATA';
@@ -83,7 +83,7 @@ export function fetchUserAndRepos(user) {
                 !currentUserData.isFetching &&
                 currentUserData.userData.message
             ) {
-                return false;
+                return;
             }
             return dispatch(fetchRepos(user));
         });
